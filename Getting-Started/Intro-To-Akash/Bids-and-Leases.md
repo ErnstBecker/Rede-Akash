@@ -1,27 +1,27 @@
 # Lances e Arrendamentos
 
-# Como funciona o Marketplace?
+### Como funciona o Marketplace?
 
 O Akash Marketplace gira em torno das Implantações, que descrevem completamente os recursos que um inquilino está solicitando da rede. As Implantações contêm Grupos, que são uma agrupação de recursos destinados a serem alugados juntos de um único provedor.
 
-# Implantar aplicações na Akash envolve dois tipos de usuários:
+### Implantar aplicações na Akash envolve dois tipos de usuários:
 
 1. O Inquilino: a entidade que implanta a aplicação.
 2. O Provedor: a entidade que hospeda a aplicação
 
-# O que é um Leilão Reverso?
+### O que é um Leilão Reverso?
 
 Akash usa um leilão reverso. Os inquilinos definem o preço e os termos de sua implantação, e os provedores de nuvem fazem lances nas implantações.
 
-# Em um leilão reverso muito simples:
+### Em um leilão reverso muito simples:
 
 1. Um inquilino cria pedidos.
 2. Os fornecedores fazem lances nos pedidos.
 3. Os inquilinos escolhem as propostas vencedoras e criam os contratos de arrendamento.
 
-# Ciclo de Vida de Implantação do Akash
+### Ciclo de Vida de Implantação do Akash
 
-# O ciclo de vida de uma implantação típica de aplicativo é o seguinte:
+### O ciclo de vida de uma implantação típica de aplicativo é o seguinte:
 
 1. O inquilino cria um arquivo.yml composto por marcação SDL que descreve os recursos necessários para executar sua aplicação. Isso é conhecido como uma implantação. 
 2. O inquilino submete essa definição à blockchain. 
@@ -33,7 +33,7 @@ Akash usa um leilão reverso. Os inquilinos definem o preço e os termos de sua 
 8. A carga de trabalho está em execução - se for uma aplicação web, pode ser visitada 
 9. O prestador ou inquilino eventualmente encerra o contrato de locação, encerrando a carga de trabalho. 
 
-# Pagamentos
+### Pagamentos
 
 Os aluguéis são pagos do proprietário da implantação (inquilino) para o provedor através de um mecanismo de depósito e retirada. 
 
@@ -41,21 +41,21 @@ Os inquilinos são obrigados a apresentar um depósito ao criar uma implantaçã
 
 Se os fundos disponíveis no depósito chegarem à zero, um prestador pode encerrar o contrato de locação, portanto, um inquilino que deseja manter o contrato ativo deve adicionar fundos ao seu depósito, pois isso garante que seu contrato não termine prematuramente. Quando um desdobramento é encerrado, a parte não gasta do saldo será devolvida ao inquilino. 
 
-# Contas Escrow
+### Contas Escrow
 
 As contas escrow são um mecanismo que permite pagamentos baseados no tempo de uma conta para outra sem micropagamentos bloco a bloco. Eles também suportam manter fundos em uma conta até que um evento arbitrário ocorra. 
 
-# As contas escrow são necessárias em Akash por dois motivos principais: 
+### As contas escrow são necessárias em Akash por dois motivos principais: 
 
 1. Os arrendamentos no Akash são precificados em blocos - a cada novo bloco, um pagamento do inquilino (proprietário da implantação) ao provedor (detentor do arrendamento) é devido. Considerações de desempenho e segurança proíbem a abordagem ingênua de transferir tokens em cada bloco. 
 2. Licitar em um pedido não deve ser gratuito (for various reasons, including performance and security). Akash exige um depósito para cada lance. O depósito é devolvido ao licitante quando a licitação é encerrada. 
 
-# Depósitos de Licitação
+### Depósitos de Licitação
 
 Fazer uma oferta em um pedido requer o pagamento de um depósito. O depósito será devolvido à conta do fornecedor quando a oferta passar para o estado FECHADO. 
 Os depósitos de licitação são implementados com um módulo de conta escrow. Veja aqui para mais informações. 
 
-# Atributos Auditados 
+### Atributos Auditados 
 
 Atributos auditados permitem que os usuários que implantam aplicativos sejam mais seletivos sobre quais provedores podem executar seus aplicativos. Qualquer pessoa na Akash Network pode atribuir esses atributos aos Provedores através de uma transação on-chain.
 
