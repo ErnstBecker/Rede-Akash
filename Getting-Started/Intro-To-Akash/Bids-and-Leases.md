@@ -60,7 +60,7 @@ Os depósitos de licitação são implementados com um módulo de conta escrow. 
 Atributos auditados permitem que os usuários que implantam aplicativos sejam mais seletivos sobre quais provedores podem executar seus aplicativos. Qualquer pessoa na Akash Network pode atribuir esses atributos aos Provedores através de uma transação on-chain.
 
 
-## Parâmetros On-Chain
+# Parâmetros On-Chain
 
 | Nome                  | Valor Inicial | Descrição                                    |
 |-----------------------|---------------|----------------------------------------------|
