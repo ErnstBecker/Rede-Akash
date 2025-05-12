@@ -1,0 +1,385 @@
+# Akash CLI
+
+Esse guia vai guiar você através do deploy de uma simples aplicação "Hello World" Next.JS em 5 minutos. O processo de deploy de qualquer outra aplicação é idêntico, apenas o arquivo sdl precisa ser alterado de acordo com a configuração e imagem do container.
+
+[Clique aqui para assistir ao vídeo](https://www.youtube.com/embed/fYta01WFyVU?si=kYJxOfObuXx2EfCQ)
+
+#### Antes de começar
+
+Você deve ter o Akash CLI instalado e configurado corretamente junto com alguns AKTs em sua carteira (0.5 AKT mínimo para uma única implantação, mais uma pequena quantia para taxas de transação).
+
+Siga o [guia de instalação do CLI](/docs/deployments/akash-cli/installation/#install-akash-cli) para instalar o Akash CLI se necessário.
+
+### Verifique o saldo da sua conta
+
+Verifique se sua conta tem saldo suficiente executando:
+
+```bash
+provider-services query bank balances --node $AKASH_NODE $AKASH_ACCOUNT_ADDRESS
+```
+
+Você deve ver uma resposta semelhante a:
+
+```
+balances:
+- amount: "93000637"
+  denom: uakt
+pagination:
+  next_key: null
+  total: "0"
+```
+
+Se você não tiver um saldo, veja o [guia de financiamento](/docs/deployments/akash-cli/installation/#fund-your-account). Note que o saldo indicado é denominado em uAKT (AKT x 10^-6), no exemplo acima, a conta tem um saldo de _93 AKT_. Agora estamos prontos para implantar.
+
+**Nota:** Sua conta deve ter um saldo mínimo de 0.5 AKT para criar uma implantação. Este 0.5 AKT financia a conta de escrow associada à implantação e é usada para pagar o provedor por seus serviços. É recomendado que você tenha mais do que este saldo mínimo para pagar taxas de transação. Para mais informações sobre contas de escrow, consulte [aqui](/docs/getting-started/intro-to-akash/payments/#escrow-accounts)
+
+
+### Passo 1: Crie sua configuração
+
+Crie uma configuração de implantação [deploy.yaml](https://raw.githubusercontent.com/maxmaxlabs/hello-akash-world/master/deploy.yml) para implantar o `akashlytics/hello-akash-world:0.2.0` para [hello-akash-world](https://github.com/maxmaxlabs/hello-akash-world), que é um aplicativo "Hello World" simples em Next.JS.
+
+Você pode usar o comando CURL para baixar o arquivo SDL:
+
+```
+curl -s https://raw.githubusercontent.com/maxmaxlabs/hello-akash-world/master/deploy.yml > deploy.yml
+```
+
+O arquivo SDL é o arquivo de configuração especificando todos os recursos necessários, como cpu, memória, armazenamento, etc. Como este é um aplicativo "Hello World" simples, os recursos necessários serão muito menores.
+
+## Passo 2: Crie sua implantação
+
+Para implantar o arquivo sdl que baixemos no passo anterior, execute o seguinte comando:
+
+```
+provider-services tx deployment create deploy.yml --from $AKASH_KEY_NAME
+```
+
+Você deve ver uma resposta semelhante a:
+
+```javascript
+{
+  "height":"140325",
+  "txhash":"2AF4A01B9C3DE12CC4094A95E9D0474875DFE24FD088BB443238AC06E36D98EA",
+  "codespace":"",
+  "code":0,
+  "data":"0A130A116372656174652D6465706C6F796D656E74",
+  "raw_log":"[{\"events\":[{\"type\":\"akash.v1\",\"attributes\":[{\"key\":\"module\",\"value\":\"deployment\"},{\"key\":\"action\",\"value\":\"deployment-created\"},{\"key\":\"version\",\"value\":\"2b86f778de8cc9df415490efa162c58e7a0c297fbac9cdb8d6c6600eda56f17e\"},{\"key\":\"owner\",\"value\":\"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj\"},{\"key\":\"dseq\",\"value\":\"140324\"},{\"key\":\"module\",\"value\":\"market\"},{\"key\":\"action\",\"value\":\"order-created\"},{\"key\":\"owner\",\"value\":\"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj\"},{\"key\":\"dseq\",\"value\":\"140324\"},{\"key\":\"gseq\",\"value\":\"1\"},{\"key\":\"oseq\",\"value\":\"1\"}]},{\"type\":\"message\",\"attributes\":[{\"key\":\"action\",\"value\":\"create-deployment\"},{\"key\":\"sender\",\"value\":\"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj\"},{\"key\":\"sender\",\"value\":\"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj\"}]},{\"type\":\"transfer\",\"attributes\":[{\"key\":\"recipient\",\"value\":\"akash17xpfvakm2amg962yls6f84z3kell8c5lazw8j8\"},{\"key\":\"sender\",\"value\":\"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj\"},{\"key\":\"amount\",\"value\":\"5000uakt\"},{\"key\":\"recipient\",\"value\":\"akash14pphss726thpwws3yc458hggufynm9x77l4l2u\"},{\"key\":\"sender\",\"value\":\"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj\"},{\"key\":\"amount\",\"value\":\"5000000uakt\"}]}]}]",
+  "logs":[
+    {
+      "msg_index":0,
+      "log":"",
+      "events":[
+        {
+          "type":"akash.v1",
+          "attributes":[
+            {
+              "key":"module",
+              "value":"deployment"
+            },
+            {
+              "key":"action",
+              "value":"deployment-created"
+            },
+            {
+              "key":"version",
+              "value":"2b86f778de8cc9df415490efa162c58e7a0c297fbac9cdb8d6c6600eda56f17e"
+            },
+            {
+              "key":"owner",
+              "value":"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj"
+            },
+            {
+              "key":"dseq",
+              "value":"140324"
+            },
+            {
+              "key":"module",
+              "value":"market"
+            },
+            {
+              "key":"action",
+              "value":"order-created"
+            },
+            {
+              "key":"owner",
+              "value":"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj"
+            },
+            {
+              "key":"dseq",
+              "value":"140324"
+            },
+            {
+              "key":"gseq",
+              "value":"1"
+            },
+            {
+              "key":"oseq",
+              "value":"1"
+            }
+          ]
+        },
+        {
+          "type":"message",
+          "attributes":[
+            {
+              "key":"action",
+              "value":"create-deployment"
+            },
+            {
+              "key":"sender",
+              "value":"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj"
+            },
+            {
+              "key":"sender",
+              "value":"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj"
+            }
+          ]
+        },
+        {
+          "type":"transfer",
+          "attributes":[
+            {
+              "key":"recipient",
+              "value":"akash17xpfvakm2amg962yls6f84z3kell8c5lazw8j8"
+            },
+            {
+              "key":"sender",
+              "value":"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj"
+            },
+            {
+              "key":"amount",
+              "value":"5000uakt"
+            },
+            {
+              "key":"recipient",
+              "value":"akash14pphss726thpwws3yc458hggufynm9x77l4l2u"
+            },
+            {
+              "key":"sender",
+              "value":"akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj"
+            },
+            {
+              "key":"amount",
+              "value":"5000000uakt"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "info":"",
+  "gas_wanted":"100000",
+  "gas_used":"94653",
+  "tx":null,
+  "timestamp":""
+}
+```
+
+### Encontre sua implantação
+
+Encontre a sequência de implantação (**DSEQ**) na implantação que você acabou de criar. Por exemplo, na implantação atual, a sequência de DSEQ é 140324, que você pode confirmar na resposta acima.
+
+Em seguida, execute o seguinte comando, certifique-se de copiar e colar o valor DSEQ da sua implantação:
+
+```bash
+export AKASH_DSEQ=CHANGETHIS
+```
+
+Agora defina a sequência de pedido (OSEQ) e a sequência de grupo (GSEQ). Note que se você está implantando pela primeira vez no Akash, a sequência OSEQ e GSEQ será 1.
+
+```bash
+AKASH_OSEQ=1
+AKASH_GSEQ=1
+```
+
+Verifique se temos os valores corretos preenchidos executando:
+
+```bash
+echo $AKASH_DSEQ $AKASH_OSEQ $AKASH_GSEQ
+```
+
+## Passo 3: Veja suas ofertas e escolha um provedor
+
+Após um curto período de tempo, você deve ver ofertas de provedores para esta implantação com o seguinte comando:
+
+```bash
+provider-services query market bid list --owner=$AKASH_ACCOUNT_ADDRESS --node $AKASH_NODE --dseq $AKASH_DSEQ --state=open
+```
+
+### Escolha um provedor
+
+Note que existem ofertas de vários provedores diferentes. Neste caso, ambos os provedores estão dispostos a aceitar uma oferta de _1 uAKT_. Isso significa que a concessão pode ser criada usando _1 uAKT_ ou _0.000001 AKT_ por bloco para executar o container. Você deve ver uma resposta semelhante a:
+
+```
+bids:
+- bid:
+    bid_id:
+      dseq: "140324"
+      gseq: 1
+      oseq: 1
+      owner: akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj
+      provider: akash10cl5rm0cqnpj45knzakpa4cnvn5amzwp4lhcal
+    created_at: "140326"
+    price:
+      amount: "1"
+      denom: uakt
+    state: open
+  escrow_account:
+    balance:
+      amount: "50000000"
+      denom: uakt
+    id:
+      scope: bid
+      xid: akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj/140324/1/1/akash10cl5rm0cqnpj45knzakpa4cnvn5amzwp4lhcal
+    owner: akash10cl5rm0cqnpj45knzakpa4cnvn5amzwp4lhcal
+    settled_at: "140326"
+    state: open
+    transferred:
+      amount: "0"
+      denom: uakt
+- bid:
+    bid_id:
+      dseq: "140324"
+      gseq: 1
+      oseq: 1
+      owner: akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj
+      provider: akash1f6gmtjpx4r8qda9nxjwq26fp5mcjyqmaq5m6j7
+    created_at: "140326"
+    price:
+      amount: "1"
+      denom: uakt
+    state: open
+  escrow_account:
+    balance:
+      amount: "50000000"
+      denom: uakt
+    id:
+      scope: bid
+      xid: akash1vn06ycjjnvsvl639fet9lajjctuturrtx7fvuj/140324/1/1/akash1f6gmtjpx4r8qda9nxjwq26fp5mcjyqmaq5m6j7
+    owner: akash1f6gmtjpx4r8qda9nxjwq26fp5mcjyqmaq5m6j7
+    settled_at: "140326"
+    state: open
+    transferred:
+      amount: "0"
+      denom: uakt
+```
+
+Para este exemplo, vamos escolher o provedor `akash10cl5rm0cqnpj45knzakpa4cnvn5amzwp4lhcal`. Execute o seguinte comando para definir a variável de provedor:
+
+```
+AKASH_PROVIDER=akash10cl5rm0cqnpj45knzakpa4cnvn5amzwp4lhcal
+```
+
+Verifique se temos o valor correto preenchido executando:
+
+```
+echo $AKASH_PROVIDER
+```
+
+## Passo 4: Crie e confirme uma concessão
+
+Crie uma concessão para a oferta do provedor escolhido acima executando este comando:
+
+```
+provider-services tx market lease create --dseq $AKASH_DSEQ --provider $AKASH_PROVIDER --from $AKASH_KEY_NAME
+```
+
+### Confirme a concessão
+
+Você pode verificar o status da sua concessão executando:
+
+```
+provider-services query market lease list --owner $AKASH_ACCOUNT_ADDRESS --node $AKASH_NODE --dseq $AKASH_DSEQ
+```
+
+Note que as ofertas fecham automaticamente após 5 minutos, e você pode obter a resposta:
+
+```
+bid not open
+```
+
+Se isso acontecer, feche sua implantação e abra uma nova implantação novamente. Para fechar sua implantação, execute este comando:
+
+```
+provider-services tx deployment close --dseq $AKASH_DSEQ  --owner $AKASH_ACCOUNT_ADDRESS --from $AKASH_KEY_NAME
+```
+
+Se sua concessão foi bem-sucedida, você deve ver uma resposta que termina com:
+
+```
+    state: active
+```
+
+**Nota:** Observe que, uma vez que a concessão for criada, o provedor começará a debitar sua conta de escrow da implantação, mesmo que você não tenha concluído o processo de implantação carregando o manifesto na próxima etapa.
+
+## Envie o manifesto
+
+Carregue o manifesto usando os valores do passo anterior:
+
+```
+provider-services send-manifest deploy.yml --dseq $AKASH_DSEQ --provider $AKASH_PROVIDER --from $AKASH_KEY_NAME
+```
+
+### Confirme a URL
+
+Agora que o manifesto foi carregado, sua imagem está implantada. Você pode recuperar os detalhes de acesso executando o seguinte comando:
+
+```
+provider-services lease-status --dseq $AKASH_DSEQ --from $AKASH_KEY_NAME --provider $AKASH_PROVIDER
+```
+
+Você deve ver uma resposta semelhante a:
+
+```javascript
+{
+  "services": {
+    "web": {
+      "name": "web",
+      "available": 1,
+      "total": 1,
+      "uris": [
+        "rga3h05jetf9h3p6dbk62m19ck.ingress.ewr1p0.mainnet.akashian.io"
+      ],
+      "observed_generation": 1,
+      "replicas": 1,
+      "updated_replicas": 1,
+      "ready_replicas": 1,
+      "available_replicas": 1
+    }
+  },
+  "forwarded_ports": {}
+}
+```
+
+Você pode acessar o aplicativo visitando os nomes de host mapeados para sua implantação. Procure uma URL/URI e copie-a para o seu navegador da web.
+
+Em seguida, você deve ser capaz de ver a página de início do aplicativo "Hello World"
+
+![HelloWorld](./12.png)
+
+### Veja seus logs
+
+Você pode ver seus logs de aplicativo para depurar problemas ou monitorar o progresso da seguinte forma:
+
+```bash
+provider-services lease-logs \
+  --dseq "$AKASH_DSEQ" \
+  --provider "$AKASH_PROVIDER" \
+  --from "$AKASH_KEY_NAME"
+```
+
+## Passo 5: Feche a implantação
+
+### Feche a implantação
+
+Agora, uma vez que aprendemos a implantar o aplicativo 'Hello World', fecharemos a implantação para não gastar nenhum AKT. Após fechar a implantação, obteremos o saldo restante restante como reembolso.
+
+Execute o seguinte comando para fechar a implantação:
+
+```
+provider-services tx deployment close --from $AKASH_KEY_NAME
+```
+
+## Conclusão
+
+Implantamos um aplicativo simples "Hello World" Next.JS dentro de 5 minutos. O processo de implantação de outros aplicativos é idêntico, apenas o arquivo sdl precisa ser alterado de acordo com a configuração e imagem do container.
